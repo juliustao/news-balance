@@ -1,13 +1,12 @@
 import argparse
-
-from bs4 import BeautifulSoup
-from urllib.request import Request, urlopen
+from newspaper import Article
 
 
 def get_title(url):
-    request = Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    soup = BeautifulSoup(urlopen(request), features="html.parser")
-    return soup.title.string
+    article = Article(url)
+    article.download()
+    article.parse()
+    return article.title
 
 
 if __name__ == "__main__":
