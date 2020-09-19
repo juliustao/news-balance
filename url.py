@@ -5,5 +5,9 @@ def get_current_url():
     return current_url
 
 
+def send_new_url():
+    pass
+
+
 if __name__ == "__main__":
     print(get_current_url())

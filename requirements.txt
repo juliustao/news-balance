@@ -1,2 +1,2 @@
-beautifulsoup4
 newspaper3k
+requests-html

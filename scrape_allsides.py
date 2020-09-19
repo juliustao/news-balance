@@ -2,7 +2,7 @@ import argparse
 from urllib.request import Request, urlopen
 from urllib.parse import quote
 
-from bs4 import BeautifulSoup
+from requests_html import HTMLSession
 
 
 def get_allsides_url(title):
@@ -19,6 +19,16 @@ def get_allsides_url(title):
     allsides_url += query
     allsides_url += "&gsc.sort=&gsc.ref=more%3Acenter"
     return allsides_url
+
+
+def parse_center_url(allsides_url):
+    session = HTMLSession()
+    r = session.get(allsides_url)
+    r.html.render()
+    # for now, only look at first link
+    result = r.html.find("[data-ctorig]", first=True)
+    center_url = result.attrs["data-ctorig"]
+    return center_url
 
 
 if __name__ == "__main__":
@@ -42,3 +52,7 @@ if __name__ == "__main__":
     allsides_url = get_allsides_url(title)
     print("\nAllSides URL:")
     print(allsides_url)
+
+    center_url = parse_center_url(allsides_url)
+    print("Politically Center URL:")
+    print(center_url)
