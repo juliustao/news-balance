@@ -44,5 +44,10 @@ right_wing = {
 }
 
 
-def is_partisan(site):
-    return site in left_wing or site in right_wing
+def get_view(site):
+    if site in left_wing:
+        return "left"
+    elif site in right_wing:
+        return "right"
+    else:
+        return None
