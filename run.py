@@ -10,15 +10,15 @@ from scrape import get_url_to_scrape, scrape_url
 from title import get_title
 from url import get_view
 
+
 opposing_view = {
     "left": "right",
     "right": "left",
 }
-
-
 buffer = 1  # in seconds
-driver_path = os.path.join("chromedriver_linux64", "chromedriver")
-show_opposing_view = True
+driver_path = "chromedriver_linux64/chromedriver"
+show_opposing_view = False
+latest = False
 
 
 if __name__ == "__main__":
@@ -40,8 +40,10 @@ if __name__ == "__main__":
         if view and len(split_url.path) > 1:
             if show_opposing_view:
                 view = opposing_view[view]
+            else:
+                view = "centrist"
             title = get_title(current_url)
-            url_to_scrape = get_url_to_scrape(title, view=view)
+            url_to_scrape = get_url_to_scrape(title, view=view, latest=latest)
             centrist_url = scrape_url(url_to_scrape)
             if centrist_url != current_url:
                 driver.execute_script("window.open('');")
