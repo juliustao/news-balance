@@ -1,2 +1,3 @@
 newspaper3k
 requests-html
+selenium
