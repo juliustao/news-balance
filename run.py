@@ -11,39 +11,51 @@ from title import get_title
 from url import get_view
 
 
-opposing_view = {
-    "left": "right",
-    "right": "left",
-}
-buffer = 1  # in seconds
-driver_path = "chromedriver_linux64/chromedriver"
-show_opposing_view = False
-latest = False
-
-
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--driver_path", type=str, default="chromedriver_linux64/chromedriver",
+        help="Relative path of browser driver from repository directory.",
+    )
+    parser.add_argument(
+        "--buffer", type=float, default=1.,
+        help="Time in seconds added between loops.",
+    )
+    parser.add_argument(
+        "--opposite", action="store_true",
+        help="Show articles from opposing rather than centrist views.",
+    )
+    parser.add_argument(
+        "--latest", action="store_true",
+        help="Show the most recent rather than most relevant article.",
+    )
+    args = parser.parse_args()
+
+    if args.buffer < 1.:
+        raise Exception("Buffer should be at least 1 second.")
+
     repo_path = os.path.dirname(os.path.abspath(__file__))
-    driver = webdriver.Chrome(os.path.join(repo_path, driver_path))
+    driver = webdriver.Chrome(os.path.join(repo_path, args.driver_path))
     while True:
-        time.sleep(buffer)
+        time.sleep(args.buffer)
         try:
             current_url = driver.current_url
         except selenium.common.exceptions.NoSuchWindowException:
             driver.switch_to.window(driver.window_handles[-1])
             current_url = driver.current_url
-        except selenium.common.exceptions.WebDriverException:
-            print("Web browser closed: program terminating.")
-            break
         split_url = urlsplit(current_url)
         # check if the site is partisan and if we're not on the home page
         view = get_view(split_url.netloc)
         if view and len(split_url.path) > 1:
-            if show_opposing_view:
-                view = opposing_view[view]
+            if args.opposite:
+                if view == "left":
+                    view = "right"
+                elif view == "right":
+                    view = "left"
             else:
                 view = "centrist"
             title = get_title(current_url)
-            url_to_scrape = get_url_to_scrape(title, view=view, latest=latest)
+            url_to_scrape = get_url_to_scrape(title, view=view, latest=args.latest)
             centrist_url = scrape_url(url_to_scrape)
             if centrist_url != current_url:
                 driver.execute_script("window.open('');")
