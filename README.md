@@ -11,7 +11,7 @@ in the setup below and change `run.py` so `driver` uses the correct browser.
 
 ## Getting Started
 0. Check if you have Python 3 by running `python3 --version`.
-If not found, install Python 3 from https://www.python.org/downloads/.
+If not found, install Python 3 from [here](https://www.python.org/downloads/).
 
 1. I highly recommend that you create a Python 3 virtual environment:
     ```
@@ -33,7 +33,7 @@ If not found, install Python 3 from https://www.python.org/downloads/.
 
 3. Install the Selenium webdriver:
 
-    See [this link](https://selenium-python.readthedocs.io/installation.html#drivers)
+    See [here](https://selenium-python.readthedocs.io/installation.html#drivers)
     for links to webdrivers for Selenium-compatible browsers. Place the unzipped
     folder under this repository, and remember to specify the driver path later.
 
@@ -64,9 +64,10 @@ If not found, install Python 3 from https://www.python.org/downloads/.
 ## Details
 The core of this repository is its backend, which checks a given article's
 political bias and recommends an article of similar content from a more
-central viewpoint. We scrape the site AllSides.com by querying the given
-article's title in its search engine and filtering for articles that are
-centrist and most similar.
+central viewpoint. We scrape the news site
+[AllSides](https://www.allsides.com/unbiased-balanced-news) by querying
+the given article's title in its search engine and filtering for articles
+that are centrist and most relevant.
 
 The frontend is what I had the most trouble with. Ideally, we could detect
 when a new webpage is loaded and send its URL to the backend, which is
