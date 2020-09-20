@@ -15,7 +15,6 @@ left_wing = {
     "www.msnbc.com",
     "www.nbcnews.com",
     "www.nytimes.com",
-    "www.npr.org",
     "www.politico.com",
     "slate.com",
     "www.theatlantic.com",
@@ -40,7 +39,6 @@ right_wing = {
     "www.dailywire.com",
     "thefederalist.com",
     "www.theblaze.com",
-    "www.wsj.com",
     "www.washingtonexaminer.com",
     "www.washingtontimes.com",
 }

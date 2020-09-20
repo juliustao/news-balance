@@ -21,10 +21,7 @@ if __name__ == "__main__":
         time.sleep(buffer)
         current_url = driver.current_url
         split_url = urlsplit(current_url)
-        print(f"current_url: {current_url}\n")
-        print(f"split_url: {split_url}\n")
         if is_partisan(split_url.netloc) and len(split_url.path) > 1:
-            print("\nAIGHT WE GOTTA SWITCH\n")
             title = get_title(current_url)
             url_to_scrape = get_url_to_scrape(title)
             centrist_url = scrape_url(url_to_scrape)
