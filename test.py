@@ -1,6 +1,6 @@
 import argparse
 
-from scrape import get_url_to_scrape, scrape_url
+from scraper import get_url_to_scrape, scrape_url
 from title import get_title
 
 

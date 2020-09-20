@@ -6,9 +6,9 @@ from urllib.parse import urlsplit, urlunsplit
 import selenium
 from selenium import webdriver
 
-from scrape import get_url_to_scrape, scrape_url
+from scraper import get_url_to_scrape, scrape_url
+from sites import get_view
 from title import get_title
-from url import get_view
 
 
 def run(driver, opposing, latest):
@@ -21,7 +21,7 @@ def run(driver, opposing, latest):
     # check if the site is partisan and if we're not on the home page
     view = get_view(split_url.netloc)
     if view and len(split_url.path) > 1:
-        print("DO WE SWITCH?")
+        print("Partisanship detected. Finding new article...")
         if opposing:
             if view == "left":
                 view = "right"
@@ -32,11 +32,9 @@ def run(driver, opposing, latest):
         title = get_title(current_url)
         url_to_scrape = get_url_to_scrape(title, view=view, latest=latest)
         centrist_url = scrape_url(url_to_scrape)
-        if centrist_url != current_url:
-            print("YEP")
-            driver.execute_script("window.open('');")
-            driver.switch_to.window(driver.window_handles[-1])
-            driver.get(centrist_url)
+        driver.execute_script("window.open('');")
+        driver.switch_to.window(driver.window_handles[-1])
+        driver.get(centrist_url)
 
 
 if __name__ == "__main__":
